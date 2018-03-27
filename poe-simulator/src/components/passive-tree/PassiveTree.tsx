@@ -54,8 +54,7 @@ export class PassiveTree extends React.Component<PassiveTreeProps> {
     };
 
     componentWillMount() {
-        const groupFactory = new GroupFactory();
-        this.groups = groupFactory.build(..._.values(json.groups));
+        this.groups = GroupFactory.build(..._.values(json.groups));
     }
 
     render() {
