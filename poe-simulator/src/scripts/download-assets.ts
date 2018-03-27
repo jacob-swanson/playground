@@ -1,8 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { NodeHttpClient } from '../src/utils/http-client/node/NodeHttpClient';
-import { LoggerFactory } from '../src/utils/logger/LoggerFactory';
+import { NodeHttpClient } from '../utils/http-client/node/NodeHttpClient';
+import { LoggerFactory } from '../utils/logger/LoggerFactory';
 import * as Url from 'url';
+import * as _ from 'lodash';
 
 const json = require('../data/passive-tree/3.1.4.json');
 const root = '../../public/images/';
@@ -45,7 +46,7 @@ function mkdir(path: string) {
 
     const imageRoot = json.imageRoot;
     mkdir(`${root}/skillSprites`);
-    for (let [skillSpriteGroupName, skillSpriteGroup] of Object.entries(json.skillSprites)) {
+    for (let [skillSpriteGroupName, skillSpriteGroup: any] of _.entries(json.skillSprites)) {
         let i = 0;
         for (let skillSprite of skillSpriteGroup) {
             const url = `${imageRoot}build-gen/passive-skill-sprite/${skillSprite.filename}`;
