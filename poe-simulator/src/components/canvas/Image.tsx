@@ -15,6 +15,7 @@ export interface ImageProps {
     mirrorY?: boolean,
     getOffsetX?: (image: Image) => number,
     getOffsetY?: (image: Image) => number,
+    onClick?: () => void
 }
 
 @observer
@@ -76,6 +77,9 @@ export class Image extends React.Component<ImageProps> {
             offsetY += this.props.getOffsetY(this);
         }
 
+        const {onClick} = this.props;
+        const listening = !!onClick;
+
         return (
             <KonvaImage
                 x={x}
@@ -85,6 +89,8 @@ export class Image extends React.Component<ImageProps> {
                 image={this.image}
                 scaleX={scaleX}
                 scaleY={scaleY}
+                onClick={this.props.onClick}
+                listening={listening}
             />
         );
     }

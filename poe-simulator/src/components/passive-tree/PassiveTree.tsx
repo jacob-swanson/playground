@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { Stage, Layer, Text } from 'react-konva';
+import { Stage, Layer, Text, FastLayer } from 'react-konva';
 import { LoggerFactory } from '../../utils/logger/LoggerFactory';
 import { Vector2d } from 'konva';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx';
-import { Inject } from '../../utils/ioc/Inject';
 import { Character } from '../../model/Character';
-import { GroupJson } from './GroupJson';
-import _ = require('lodash');
-import { PassiveTreeJson } from './PassiveTreeJson';
+import * as _ from 'lodash';
 import { GroupFactory } from './groups/GroupFactory';
+import { PassiveTreeJson } from './json/PassiveTreeJson';
+import { NodeFactory } from './nodes/NodeFactory';
 
 
 const json: PassiveTreeJson = require('./3.1.4.json');
@@ -27,6 +26,7 @@ export class PassiveTree extends React.Component<PassiveTreeProps> {
 
     private stage: Stage | null;
     private groups: JSX.Element[] = [];
+    private nodes: JSX.Element[] = [];
 
     onContentWheel = (e: any) => {
         if (!this.stage) {
@@ -54,7 +54,8 @@ export class PassiveTree extends React.Component<PassiveTreeProps> {
     };
 
     componentWillMount() {
-        this.groups = GroupFactory.build(..._.values(json.groups));
+        this.groups = GroupFactory.build(_.values(json.groups));
+        this.nodes = NodeFactory.build(json.nodes, json.groups);
     }
 
     render() {
@@ -70,8 +71,11 @@ export class PassiveTree extends React.Component<PassiveTreeProps> {
                 y={this.position.y}
                 draggable={true}
             >
-                <Layer>
+                <FastLayer>
                     {this.groups}
+                </FastLayer>
+                <Layer>
+                    {this.nodes}
                 </Layer>
             </Stage>
         );

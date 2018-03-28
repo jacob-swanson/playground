@@ -4,8 +4,9 @@ import { NodeHttpClient } from '../utils/http-client/node/NodeHttpClient';
 import { LoggerFactory } from '../utils/logger/LoggerFactory';
 import * as Url from 'url';
 import * as _ from 'lodash';
+import { PassiveTreeJson } from '../components/passive-tree/json/PassiveTreeJson';
 
-const json = require('../data/passive-tree/3.1.4.json');
+const json: PassiveTreeJson = require('../data/passive-tree/3.1.4.json');
 const root = '../../public/images/';
 const httpClient = new NodeHttpClient();
 const log = LoggerFactory.byName('download-assets');
@@ -46,12 +47,16 @@ function mkdir(path: string) {
 
     const imageRoot = json.imageRoot;
     mkdir(`${root}/skillSprites`);
-    for (let [skillSpriteGroupName, skillSpriteGroup: any] of _.entries(json.skillSprites)) {
+    for (let [skillSpriteGroupName, skillSpriteGroup] of _.entries(json.skillSprites)) {
         let i = 0;
         for (let skillSprite of skillSpriteGroup) {
             const url = `${imageRoot}build-gen/passive-skill-sprite/${skillSprite.filename}`;
-            const pathname = path.basename(Url.parse(url).pathname);
-            const filename = `skillSprites/${pathname}`;
+            const pathname = Url.parse(url).pathname;
+            if (!pathname) {
+                throw new Error('No pathname');
+            }
+            const basename = path.basename(pathname);
+            const filename = `skillSprites/${basename}`;
             const dest = `${root}/${filename}`;
             await download(url, dest);
             json.skillSprites[skillSpriteGroupName][i].filename = filename;
@@ -60,13 +65,13 @@ function mkdir(path: string) {
     }
 
     mkdir(`${root}/extraImages`);
-    for (let [number, data] of Object.entries(json.extraImages)) {
+    for (let [key, data] of _.entries(json.extraImages)) {
         const url = `${imageRoot}${data.image}`;
         const pathname = path.basename(data.image);
         const filename = `extraImages/${pathname}`;
         const dest = `${root}/${filename}`;
         await download(url, dest);
-        json.extraImages[number].image = filename;
+        json.extraImages[key].image = filename;
     }
 
     fs.writeFileSync('data.json', JSON.stringify(json, null, '\t'));

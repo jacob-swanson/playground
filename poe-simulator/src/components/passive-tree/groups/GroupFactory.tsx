@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { GroupJson } from '../GroupJson';
 import { SmallGroup } from './SmallGroup';
 import { LargeGroup } from './LargeGroup';
 import { MediumGroup } from './MediumGroup';
 import { Filters } from '../../../utils/Filters';
+import { GroupJson } from '../json/GroupJson';
 
 export namespace GroupFactory {
+    const groupCache = {};
     function buildGroup(json: GroupJson, index: number): JSX.Element | null {
         const x = json.x * 0.3835;
         const y = json.y * 0.3835;
@@ -19,7 +20,7 @@ export namespace GroupFactory {
         return null;
     }
 
-    export function build(...groups: GroupJson[]): JSX.Element[] {
+    export function build(groups: GroupJson[]): JSX.Element[] {
         return groups
             .map(buildGroup)
             .filter(Filters.notEmpty);

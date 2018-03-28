@@ -19,5 +19,5 @@ export interface NodeJson {
   reminderText: string;
   sa: number;
   sd: string[];
-  spc: [];
+  spc: void[];
 }
