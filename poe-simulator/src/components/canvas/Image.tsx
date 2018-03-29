@@ -51,15 +51,8 @@ export class Image extends React.Component<ImageProps> {
     render() {
         let offsetX = this.props.offsetX || 0;
         let offsetY = this.props.offsetY || 0;
-        offsetX *= -1;
-        offsetY *= -1;
         let scaleX = this.props.scale || 1;
         let scaleY = this.props.scale || 1;
-
-        // if (this.props.center) {
-        //     offsetX += this.image.width / 2;
-        //     offsetY += this.image.height / 2;
-        // }
 
         if (this.props.mirrorX) {
             scaleX *= -1;
@@ -70,11 +63,11 @@ export class Image extends React.Component<ImageProps> {
         }
 
         if (this.props.getOffsetX) {
-            offsetX += -1 * this.props.getOffsetX(this);
+            offsetX += this.props.getOffsetX(this);
         }
 
         if (this.props.getOffsetY) {
-            offsetY += -1 * this.props.getOffsetY(this);
+            offsetY += this.props.getOffsetY(this);
         }
 
         const {onClick} = this.props;
@@ -82,8 +75,8 @@ export class Image extends React.Component<ImageProps> {
 
         let x = this.props.x || 0;
         let y = this.props.y || 0;
-        x += offsetX;
-        y += offsetY;
+        x += -1 * offsetX;
+        y += -1 * offsetY;
 
         const centerX = this.props.center ? true : this.props.centerX;
         const centerY = this.props.center ? true : this.props.centerY;
