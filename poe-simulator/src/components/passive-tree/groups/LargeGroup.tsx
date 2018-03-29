@@ -3,10 +3,6 @@ import { Image } from '../../canvas/Image';
 import { GroupProps } from './GroupProps';
 
 export class LargeGroup extends React.Component<GroupProps> {
-    private getOffsetX = (image: Image) => {
-        return image.width / 2;
-    };
-
     private getOffsetY = (image: Image) => {
         return image.height;
     };
@@ -19,7 +15,7 @@ export class LargeGroup extends React.Component<GroupProps> {
                 url={'/images/assets/PSGroupBackground3-0.3835.gif'}
                 x={x}
                 y={y}
-                getOffsetX={this.getOffsetX}
+                centerX={true}
                 getOffsetY={this.getOffsetY}
             />,
             <Image
@@ -28,7 +24,7 @@ export class LargeGroup extends React.Component<GroupProps> {
                 x={x}
                 y={y}
                 mirrorY={true}
-                getOffsetX={this.getOffsetX}
+                centerX={true}
             />
         ];
     }
