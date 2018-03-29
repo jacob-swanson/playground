@@ -1,9 +1,10 @@
 import React = require('react');
 import { PassiveTreeJson } from '../json/PassiveTreeJson';
-import { Circle } from 'react-konva';
+import { Circle, Group } from 'react-konva';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import * as Konva from 'konva';
+import { Image } from '../../canvas/Image';
 
 
 export interface NodeProps {
@@ -22,7 +23,20 @@ export class Node extends React.Component<NodeProps> {
     render() {
         const {x, y} = this.props;
         return (
-            <Circle x={x} y={y} radius={25} fill={this.color} onClick={this.handleClick} perfectDrawEnabled={false}/>
+            <Group>
+                <Image
+                    url={'/images/assets/JewelFrameAllocated-0.3835.png'}
+                    x={x}
+                    y={y}
+                    center={true}
+                />
+                <Image
+                    url={'/images/assets/JewelSocketActiveGreen-0.3835.png'}
+                    x={x}
+                    y={y}
+                    center={true}
+                />
+            </Group>
         );
     }
 }

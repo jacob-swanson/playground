@@ -6,7 +6,6 @@ import { Filters } from '../../../utils/Filters';
 import { GroupJson } from '../json/GroupJson';
 
 export namespace GroupFactory {
-    const groupCache = {};
     function buildGroup(json: GroupJson, index: number): JSX.Element | null {
         const x = json.x * 0.3835;
         const y = json.y * 0.3835;

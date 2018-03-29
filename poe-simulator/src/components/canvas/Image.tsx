@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Image as KonvaImage } from 'react-konva';
+import { Sprite as PixiSprite } from 'react-pixi-fiber';
+import * as PIXI from 'pixi.js';
 
 export interface ImageProps {
     url: string,
@@ -10,6 +11,8 @@ export interface ImageProps {
     offsetX?: number,
     offsetY?: number,
     center?: boolean,
+    centerX?: boolean,
+    centerY?: boolean,
     scale?: number,
     mirrorX?: boolean,
     mirrorY?: boolean,
@@ -20,46 +23,43 @@ export interface ImageProps {
 
 @observer
 export class Image extends React.Component<ImageProps> {
-    @observable private image?: HTMLImageElement = undefined;
+    private texture = PIXI.Texture.fromImage(this.props.url);
+
+    @observable
+    private _width: number = 0;
+
+    @observable
+    private _height: number = 0;
+
+
+    constructor(props: ImageProps) {
+        super(props);
+        this.texture.on('update', (texture) => {
+            this._width = texture.width;
+            this._height = texture.height;
+        });
+    }
 
     get height(): number {
-        if (!this.image) {
-            return 0;
-        }
-        return this.image.height;
+        return this._height;
     }
 
     get width(): number {
-        if (!this.image) {
-            return 0;
-        }
-        return this.image.width;
-    }
-
-    componentDidMount() {
-        const image = new window.Image();
-        image.src = this.props.url;
-        image.onload = () => {
-            this.image = image;
-        };
+        return this._width;
     }
 
     render() {
-        if (!this.image) {
-            return null;
-        }
-
-        const x = this.props.x || 0;
-        const y = this.props.y || 0;
         let offsetX = this.props.offsetX || 0;
         let offsetY = this.props.offsetY || 0;
+        offsetX *= -1;
+        offsetY *= -1;
         let scaleX = this.props.scale || 1;
         let scaleY = this.props.scale || 1;
 
-        if (this.props.center) {
-            offsetX += this.image.width / 2;
-            offsetY += this.image.height / 2;
-        }
+        // if (this.props.center) {
+        //     offsetX += this.image.width / 2;
+        //     offsetY += this.image.height / 2;
+        // }
 
         if (this.props.mirrorX) {
             scaleX *= -1;
@@ -70,27 +70,42 @@ export class Image extends React.Component<ImageProps> {
         }
 
         if (this.props.getOffsetX) {
-            offsetX += this.props.getOffsetX(this);
+            offsetX += -1 * this.props.getOffsetX(this);
         }
 
         if (this.props.getOffsetY) {
-            offsetY += this.props.getOffsetY(this);
+            offsetY += -1 * this.props.getOffsetY(this);
         }
 
         const {onClick} = this.props;
         const listening = !!onClick;
 
+        let x = this.props.x || 0;
+        let y = this.props.y || 0;
+        x += offsetX;
+        y += offsetY;
+
+        const centerX = this.props.center ? true : this.props.centerX;
+        const centerY = this.props.center ? true : this.props.centerY;
+        let anchorX = centerX ? 0.5 : 0;
+        let anchorY = centerY ? 0.5 : 0;
+        if (scaleX < 0) {
+            anchorX = 1 - anchorX;
+        }
+        if (scaleY < 0) {
+            anchorY = 1 - anchorY;
+        }
+
+        const anchor = new PIXI.ObservablePoint(() => {}, {}, anchorX, anchorY);
+        const scale = new PIXI.ObservablePoint(() => {}, {}, scaleX, scaleY);
+
         return (
-            <KonvaImage
+            <PixiSprite
                 x={x}
                 y={y}
-                offsetX={offsetX}
-                offsetY={offsetY}
-                image={this.image}
-                scaleX={scaleX}
-                scaleY={scaleY}
-                onClick={this.props.onClick}
-                listening={listening}
+                anchor={anchor}
+                texture={this.texture}
+                scale={scale}
             />
         );
     }

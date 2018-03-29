@@ -4,14 +4,17 @@
   "private": true,
   "dependencies": {
     "@types/lodash": "^4.14.106",
+    "@types/pixi.js": "^4.7.2",
     "konva": "^2.0.2",
     "lodash": "^4.17.5",
     "mobx": "^4.1.0",
     "mobx-react": "^5.0.0",
     "mobx-react-devtools": "^5.0.1",
+    "pixi.js": "^4.7.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-konva": "^1.7.1",
+    "react-pixi-fiber": "^0.4.3",
     "react-scripts-ts": "2.13.0",
     "reflect-metadata": "^0.1.12"
   },

@@ -15,7 +15,7 @@ export class LargeGroup extends React.Component<GroupProps> {
         const {x, y} = this.props;
         return [
             <Image
-                key={1}
+                key="LargeGroup1"
                 url={'/images/assets/PSGroupBackground3-0.3835.gif'}
                 x={x}
                 y={y}
@@ -23,13 +23,12 @@ export class LargeGroup extends React.Component<GroupProps> {
                 getOffsetY={this.getOffsetY}
             />,
             <Image
-                key={2}
+                key="LargeGroup2"
                 url={'/images/assets/PSGroupBackground3-0.3835.gif'}
                 x={x}
                 y={y}
                 mirrorY={true}
                 getOffsetX={this.getOffsetX}
-                getOffsetY={this.getOffsetY}
             />
         ];
     }
