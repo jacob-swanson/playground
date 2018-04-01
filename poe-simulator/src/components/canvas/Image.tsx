@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { observable } from 'mobx';
+import { computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Sprite as PixiSprite } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
+import { Sprite } from '../../pixi/PixiRenderer';
 
 export interface ImageProps {
     url: string,
@@ -25,11 +25,8 @@ export interface ImageProps {
 export class Image extends React.Component<ImageProps> {
     private texture = PIXI.Texture.fromImage(this.props.url);
 
-    @observable
-    private _width: number = 0;
-
-    @observable
-    private _height: number = 0;
+    @observable private _width: number = 0;
+    @observable private _height: number = 0;
 
 
     constructor(props: ImageProps) {
@@ -40,10 +37,12 @@ export class Image extends React.Component<ImageProps> {
         });
     }
 
+    @computed
     get height(): number {
         return this._height;
     }
 
+    @computed
     get width(): number {
         return this._width;
     }
@@ -89,16 +88,15 @@ export class Image extends React.Component<ImageProps> {
             anchorY = 1 - anchorY;
         }
 
-        const anchor = new PIXI.ObservablePoint(() => {}, {}, anchorX, anchorY);
-        const scale = new PIXI.ObservablePoint(() => {}, {}, scaleX, scaleY);
-
         return (
-            <PixiSprite
+            <Sprite
+                texture={this.texture}
                 x={x}
                 y={y}
-                anchor={anchor}
-                texture={this.texture}
-                scale={scale}
+                anchorX={anchorX}
+                anchorY={anchorY}
+                scaleX={scaleX}
+                scaleY={scaleY}
             />
         );
     }

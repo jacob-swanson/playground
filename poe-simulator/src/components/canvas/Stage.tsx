@@ -1,11 +1,11 @@
 import React = require('react');
 import { LoggerFactory } from '../../utils/logger/LoggerFactory';
-import { Stage as PixiStage } from 'react-pixi-fiber';
+import { PixiStage as PixiStage } from '../../pixi/PixiStage';
 import * as ReactDOM from 'react-dom';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-const log = LoggerFactory.forClass('Stage');
+const log = LoggerFactory.byName('Stage');
 
 export interface StageProps {
     width?: number;
@@ -30,11 +30,11 @@ export class Stage extends React.Component<StageProps> {
         const node = ReactDOM.findDOMNode(this.stage);
         node.addEventListener('mousewheel', this.onContentWheel);
     }
-    
-    componentDidUnmount() {
-      if (!this.stage) {
-        return;
-      }
+
+    componentWillUnmount() {
+        if (!this.stage) {
+            return;
+        }
         const node = ReactDOM.findDOMNode(this.stage);
         node.removeEventListener('mousewheel', this.onContentWheel);
     }
@@ -43,10 +43,18 @@ export class Stage extends React.Component<StageProps> {
         const delta = e.deltaY || e.wheelDelta;
         this.scale = delta > 0 ? this.scale * 1.5 : this.scale / 1.5;
     };
-    
+
     onMouseDown = (e: any) => {
-      this.isDragging = true;
-    }
+        this.isDragging = true;
+    };
+
+    onMouseUp = (e: any) => {
+        this.isDragging = false;
+    };
+
+    onMouseMove = (e: any) => {
+
+    };
 
     // onContentWheel = (e: any) => {
     //     if (!this.stage) {
@@ -81,9 +89,11 @@ export class Stage extends React.Component<StageProps> {
                     ref={(stage) => this.stage = stage}
                     width={window.innerWidth}
                     height={window.innerHeight}
-                    scale={scale}
-                    x={this.position.x}
-                    y={this.position.y}
+                    backgroundColor={0x1099bb}
+                    // scale={scale}
+                    // x={this.position.x}
+                    // y={this.position.y}
+                    // interactive={true}
                 >
                     {this.props.children}
                 </PixiStage>

@@ -9,18 +9,13 @@ export class ConsoleLogger extends Logger {
 
     constructor(tag: string) {
         super();
-        this.tag = StringUtils.padEnd(tag.substring(0, 15), 15);
+        // this.tag = StringUtils.padEnd(tag.substring(0, 10), 10);
+        this.tag = tag;
     }
 
     log(level: LogLevel, message: string, ...context: Json[]): void {
         const datetime = new Date().toISOString();
-        const levelString = StringUtils.padEnd(
-            level
-                .toUpperCase()
-                .substr(0, 4),
-            4
-        );
-        const output = `[${datetime}] [${this.tag}] [${levelString}] ${message}`;
+        const output = `[${datetime}] [${this.tag}] [${level}] ${message}`;
         if (Array.isArray(context) && context.length > 0) {
             if (context.length === 1) {
                 console.log(output, context[0]);

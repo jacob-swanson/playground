@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Image } from '../../canvas/Image';
 import { GroupProps } from './GroupProps';
+import { observer } from 'mobx-react';
 
+@observer
 export class LargeGroup extends React.Component<GroupProps> {
     private getOffsetY = (image: Image) => {
         return image.height;
