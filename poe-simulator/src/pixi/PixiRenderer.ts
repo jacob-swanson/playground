@@ -3,15 +3,16 @@ import { Types } from './Types';
 import * as PIXI from 'pixi.js';
 import * as _ from 'lodash';
 import { LoggerFactory } from '../utils/logger/LoggerFactory';
-import { ReactPixiSprite, ReactPixiSpriteProps } from './ReactPixiSprite';
-import { PixiRenderable } from './PixiRenderable';
+import { ReactPixiSprite, ReactPixiSpriteProps } from './components/ReactPixiSprite';
+import { PixiRenderable } from './components/PixiRenderable';
 import Container = PIXI.Container;
 import DisplayObject = PIXI.DisplayObject;
 import * as invariant from 'fbjs/lib/invariant';
 import { emptyObject } from '../utils/emptyObject';
+import { NullLogger } from '../utils/logger/NullLogger';
 const now = require('performance-now');
 
-const log = LoggerFactory.byName('PixiRenderer');
+const log = new NullLogger();
 
 type PropTypes = ReactPixiSpriteProps;
 type ElementTypes = 'Sprite';
@@ -28,7 +29,7 @@ function createInstance(type: ElementTypes, props: PropTypes, internalInstanceHa
     let inst: PixiRenderable | null = null;
     switch (type) {
         case Types.Sprite:
-            inst = new ReactPixiSprite(props.texture);
+            inst = new ReactPixiSprite();
             break;
         default:
             throw new Error(`Type ${type} not supported`);
@@ -120,7 +121,7 @@ function resetAfterCommit() {
     log.trace('resetAfterCommit');
 }
 
-function resetTextContent(pixiElement: any) {
+function resetTextContent(pixiElement: any): void {
     log.trace('resetTextContent', {pixiElement});
 }
 
@@ -156,16 +157,15 @@ function filterByKey(inputObject: any, filter: any) {
     return exportObject;
 }
 
-function commitUpdate(instance: any, updatePayload: any, type: any, lastRawProps: any, nextRawProps: any, internalInstanceHandle: any) {
-    log.trace('commitUpdate', {instance, updatePayload, type, lastRawProps, nextRawProps, internalInstanceHandle});
+function commitUpdate(instance: any, updatePayload: any, type: any, oldProps: any, nextProps: any, internalInstanceHandle: any) {
+    log.trace('commitUpdate', {instance, updatePayload, type, oldProps, nextProps, internalInstanceHandle});
     // updatePayload is in the form of [propKey1, propValue1, ...]
-    const updatedPropKeys = including(updatePayload.filter((item: any, i: number) => i % 2 === 0));
-    const oldProps = filterByKey(lastRawProps, updatedPropKeys);
-    const newProps = filterByKey(nextRawProps, updatedPropKeys);
+    // const updatedPropKeys = including(updatePayload.filter((item: any, i: number) => i % 2 === 0));
+    // const oldProps = filterByKey(oldProps, updatedPropKeys);
+    // const newProps = filterByKey(nextProps, updatedPropKeys);
 
     // regular components only receive props that have changed
-    log.trace('applyProps', {inst: instance, oldProps, newProps});
-    instance.updateProps(oldProps, newProps);
+    instance.updateProps(oldProps, nextProps);
 }
 
 function insertBefore(parentInstance: any, child: any, beforeChild: any) {

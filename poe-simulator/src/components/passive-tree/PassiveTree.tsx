@@ -6,8 +6,9 @@ import * as _ from 'lodash';
 import { GroupFactory } from './groups/GroupFactory';
 import { PassiveTreeJson } from './json/PassiveTreeJson';
 import { LargeGroup } from './groups/LargeGroup';
-import { PixiStage as PIXIStage } from '../../pixi/PixiStage';
+import { PixiStage } from '../../pixi/components/PixiStage';
 import { observable } from 'mobx';
+import { NodeFactory } from './nodes/NodeFactory';
 
 
 const json: PassiveTreeJson = require('./3.1.4.json');
@@ -19,12 +20,22 @@ interface PassiveTreeProps {
 
 @observer
 export class PassiveTree extends React.Component<PassiveTreeProps> {
+    @observable private scale = 1;
+
+
     render() {
         return (
-            <PIXIStage width={window.innerWidth} height={window.innerHeight} backgroundColor={0x1099bb}>
-                {/*{GroupFactory.build(_.values(json.groups))}*/}
-                <LargeGroup x={300} y={300}/>
-            </PIXIStage>
+            <PixiStage
+                width={window.innerWidth}
+                height={window.innerHeight}
+                backgroundColor={0x1099bb}
+                scale={this.scale}
+                draggable={true}
+                zoomable={true}
+            >
+                {GroupFactory.build(_.values(json.groups))}
+                {NodeFactory.build(json.nodes, json.groups)}
+            </PixiStage>
         );
     }
 }

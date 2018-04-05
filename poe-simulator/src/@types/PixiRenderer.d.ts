@@ -1,4 +1,4 @@
-import { ReactPixiSpriteProps } from '../pixi/ReactPixiSprite';
+import { ReactPixiSpriteProps } from '../pixi/components/ReactPixiSprite';
 import { Types } from '../pixi/Types';
 
 interface PropertiesMap {

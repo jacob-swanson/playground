@@ -89,15 +89,7 @@ export class Image extends React.Component<ImageProps> {
         }
 
         return (
-            <Sprite
-                texture={this.texture}
-                x={x}
-                y={y}
-                anchorX={anchorX}
-                anchorY={anchorY}
-                scaleX={scaleX}
-                scaleY={scaleY}
-            />
+            null
         );
     }
 }
