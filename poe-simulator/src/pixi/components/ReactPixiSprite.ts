@@ -2,7 +2,8 @@ import * as PIXI from 'pixi.js';
 import { PixiRenderable } from './PixiRenderable';
 
 export interface ReactPixiSpriteProps {
-    url: string
+    url?: string;
+    texture?: PIXI.Texture;
     x?: number
     y?: number
     scale?: number
@@ -20,8 +21,11 @@ export class ReactPixiSprite extends PIXI.Sprite implements PixiRenderable<React
     }
 
     updateProps(oldProps: ReactPixiSpriteProps, newProps: ReactPixiSpriteProps) {
-        if (oldProps.url !== newProps.url) {
+        if (newProps.url && oldProps.url !== newProps.url) {
             this.texture = PIXI.Texture.fromImage(newProps.url);
+        }
+        if  (newProps.texture && oldProps.texture !== newProps.texture) {
+            this.texture = newProps.texture;
         }
         this.buttonMode = true;
         this.x = newProps.x || this.x;

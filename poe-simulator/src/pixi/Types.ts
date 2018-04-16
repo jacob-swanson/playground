@@ -1,4 +1,5 @@
 export enum Types {
     Container = 'Container',
-    Sprite = 'Sprite'
+    Sprite = 'Sprite',
+    Line = 'Line'
 }

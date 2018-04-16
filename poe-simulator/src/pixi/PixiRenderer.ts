@@ -10,12 +10,13 @@ import DisplayObject = PIXI.DisplayObject;
 import * as invariant from 'fbjs/lib/invariant';
 import { emptyObject } from '../utils/emptyObject';
 import { NullLogger } from '../utils/logger/NullLogger';
+import { PixiLine, PixiLineProps } from './components/PixiLine';
 const now = require('performance-now');
 
 const log = new NullLogger();
 
-type PropTypes = ReactPixiSpriteProps;
-type ElementTypes = 'Sprite';
+type PropTypes = ReactPixiSpriteProps | PixiLineProps;
+type ElementTypes = 'Sprite' | 'Line';
 
 function appendChild(parentInstance: Container, child: DisplayObject) {
     log.trace('appendChild', {parentInstance, child});
@@ -30,6 +31,9 @@ function createInstance(type: ElementTypes, props: PropTypes, internalInstanceHa
     switch (type) {
         case Types.Sprite:
             inst = new ReactPixiSprite();
+            break;
+        case Types.Line:
+            inst = new PixiLine();
             break;
         default:
             throw new Error(`Type ${type} not supported`);
@@ -215,8 +219,10 @@ const PixiRenderer = ReactFiberReconciler({
 });
 
 const Sprite: Types.Sprite = Types.Sprite;
+const Line: Types.Line = Types.Line;
 
 export {
     PixiRenderer,
-    Sprite
+    Sprite,
+    Line
 }

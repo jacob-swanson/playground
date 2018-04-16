@@ -6,7 +6,7 @@ import * as Url from 'url';
 import * as _ from 'lodash';
 import { PassiveTreeJson } from '../components/passive-tree/json/PassiveTreeJson';
 
-const json: PassiveTreeJson = require('../data/passive-tree/3.1.4.json');
+const json: PassiveTreeJson = require('../../data/passive-tree/3.2.0.json');
 const root = '../../public/images/';
 const httpClient = new NodeHttpClient();
 const log = LoggerFactory.byName('download-assets');

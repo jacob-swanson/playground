@@ -1,7 +1,7 @@
 import { GroupJson } from './GroupJson';
 import { CharacterDataJson } from './CharacterDataJson';
 import { RootJson } from './RootJson';
-import { NodeJson } from './NodeJson';
+import { NodeJson, NodeJsonMap } from './NodeJson';
 import { ExtraImagesJson } from './ExtraImagesJson';
 import { SpriteSheetJson } from './SpriteSheetJson';
 
@@ -12,7 +12,7 @@ export interface PassiveTreeJson {
         [key: string]: GroupJson
     };
     root: RootJson;
-    nodes: NodeJson[];
+    nodes: NodeJsonMap;
     extraImages: {
         [key: string]: ExtraImagesJson;
     };

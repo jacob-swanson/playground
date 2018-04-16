@@ -82,6 +82,14 @@ export class PixiStage extends React.Component<StageProps> {
         }
     };
 
+    resize = () => {
+        if (!this.app || !this.canvas) {
+            return;
+        }
+        console.log('resizing');
+        this.app.renderer.resize(this.canvas.width, this.canvas.height);
+    };
+
     componentDidMount(): void {
         const {children, width, height, backgroundColor, draggable} = this.props;
 
@@ -91,8 +99,8 @@ export class PixiStage extends React.Component<StageProps> {
         }
 
         const pixiOptions = {
-            width,
-            height,
+            width: this.canvas.width,
+            height: this.canvas.height,
             backgroundColor,
             view: this.canvas
         };
@@ -109,6 +117,8 @@ export class PixiStage extends React.Component<StageProps> {
         this.app.renderer.plugins.interaction.on('mousedown', this.onMouseDown);
         this.app.renderer.plugins.interaction.on('pointerup', this.onMouseUp);
         this.app.renderer.plugins.interaction.on('mousemove', this.onMouseMove);
+
+        window.addEventListener('resize', this.resize);
     }
 
     componentDidUpdate(prevProps: StageProps, prevState: {}) {
@@ -129,6 +139,7 @@ export class PixiStage extends React.Component<StageProps> {
 
     componentWillUnmount(): void {
         PixiRenderer.updateContainer(null, this.mountNode, this);
+        window.removeEventListener('resize', this.resize);
     }
 
     render() {

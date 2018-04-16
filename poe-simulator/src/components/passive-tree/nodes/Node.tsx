@@ -1,8 +1,13 @@
 import React = require('react');
-import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Image } from '../../canvas/Image';
 import { Sprite } from '../../../pixi/PixiRenderer';
+
+export interface AbstractNodeProps {
+    x: number;
+    y: number;
+    frameUrl: string;
+    icon: PIXI.Texture;
+}
 
 
 export interface NodeProps {
@@ -11,19 +16,17 @@ export interface NodeProps {
 }
 
 @observer
-export class Node extends React.Component<NodeProps> {
-    @observable private color = 'green';
-
+export class Node extends React.Component<AbstractNodeProps> {
     handleClick = (e: any) => {
         console.log('Node!', e);
     };
 
     render() {
-        const {x, y} = this.props;
+        const {x, y, frameUrl, icon} = this.props;
         return [
             <Sprite
                 key={0}
-                url={'/images/assets/JewelFrameAllocated-0.3835.png'}
+                url={frameUrl}
                 x={x}
                 y={y}
                 anchorX={0.5}
@@ -31,7 +34,7 @@ export class Node extends React.Component<NodeProps> {
             />,
             <Sprite
                 key={1}
-                url={'/images/assets/JewelSocketActiveGreen-0.3835.png'}
+                texture={icon}
                 x={x}
                 y={y}
                 anchorX={0.5}

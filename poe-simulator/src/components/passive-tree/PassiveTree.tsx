@@ -22,7 +22,6 @@ interface PassiveTreeProps {
 export class PassiveTree extends React.Component<PassiveTreeProps> {
     @observable private scale = 1;
 
-
     render() {
         return (
             <PixiStage
