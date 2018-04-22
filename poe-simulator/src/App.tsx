@@ -1,11 +1,9 @@
 import * as React from 'react';
+import { Character } from './model/Character';
 import './App.css';
 import { PassiveTree } from './components/passive-tree/PassiveTree';
-import { Character } from './model/Character';
-import DevTools from 'mobx-react-devtools';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Tabs } from './components/tabs/Tabs';
-import { Tab } from './components/tabs/Tab';
+
+// import 'font-awesome/css/font-awesome.css';
 
 
 class App extends React.Component {
@@ -13,24 +11,59 @@ class App extends React.Component {
 
     render() {
         return [
-            <nav key="nav" className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-                <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">PoE Simulator</a>
-                <ul className="navbar-nav px-3">
-                    <li className="nav-item text-nowrap">
-                        <a className="nav-link" href="#">Sign out</a>
-                    </li>
-                </ul>
+            <nav key="navbar" className="navbar is-fixed-top is-primary">
+                {/*Brand*/}
+                <div className="navbar-brand">
+                    <a className="navbar-item brand-text" href="#">Path of Exile</a>
+                    <div className="navbar-burger burger" data-target="navMenu">
+                        <span/>
+                        <span/>
+                        <span/>
+                    </div>
+                </div>
+
+                <div id="navMenu" className="navbar-menu">
+                    {/*Left nav*/}
+                    <div className="navbar-start">
+                        <a className="navbar-item is-active" href="#">
+                                <span className="icon">
+                                    <i className="fas fa-tree"/>
+                                </span>
+                            <span>Passive Tree</span>
+                        </a>
+                        <a className="navbar-item" href="#">
+                                <span className="icon">
+                                    <i className="fas fa-cogs"/>
+                                </span>
+                            <span>Gear</span>
+                        </a>
+                    </div>
+
+                    {/*Right nav*/}
+                    <div className="navbar-end">
+                        <a className="navbar-item">
+                                <span className="icon">
+                                    <i className="fas fa-sign-out-alt"/>
+                                </span>
+                            <span>Sign out</span>
+                        </a>
+                    </div>
+                </div>
             </nav>,
-            <div key="body" className="container-fluid" role="main">
-                <Tabs>
-                    <Tab title="Passives">
-                        <PassiveTree character={this.character}/>
-                    </Tab>
-                    <Tab title="Gear">
-                        Gear
-                    </Tab>
-                </Tabs>
-                {/*<DevTools/>*/}
+            <div key="body" className="columns is-marginless is-maximized is-gapless">
+                <div className="column is-2">
+                    <aside className="menu">
+                        <p className="menu-label">
+                            General
+                        </p>
+                        <ul className="menu-list">
+                            <li><a className="is-active">Dashboard</a></li>
+                        </ul>
+                    </aside>
+                </div>
+                <div className="column is-10 is-maximized">
+                    <PassiveTree/>
+                </div>
             </div>
         ];
     }
