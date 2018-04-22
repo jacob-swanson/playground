@@ -11,6 +11,7 @@ import { observable } from 'mobx';
 import * as classnames from 'classnames';
 import Row from 'reactstrap/lib/Row';
 import Col from 'reactstrap/lib/Col';
+import './tabs.css';
 
 @observer
 export class Tabs extends React.Component {
@@ -50,11 +51,7 @@ export class Tabs extends React.Component {
             }
             return (
                 <TabPane tabId={i}>
-                    <Row>
-                        <Col sm={12}>
-                            {child}
-                        </Col>
-                    </Row>
+                    {child}
                 </TabPane>
             )
         });
@@ -63,15 +60,13 @@ export class Tabs extends React.Component {
     render() {
         const navItems = this.getNavItems();
         const panes = this.getTabContents();
-        return (
-            <div>
-                <Nav tabs={true}>
-                    {navItems}
-                </Nav>
-                <TabContent activeTab={this.activeTab}>
-                    {panes}
-                </TabContent>
-            </div>
-        );
+        return [
+            <Nav key="nav" tabs={true}>
+                {navItems}
+            </Nav>,
+            <TabContent key="content" className="TabContent" activeTab={this.activeTab}>
+                {panes}
+            </TabContent>
+        ];
     }
 }

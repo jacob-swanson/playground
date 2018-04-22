@@ -12,8 +12,16 @@ class App extends React.Component {
     private character = new Character();
 
     render() {
-        return (
-            <div>
+        return [
+            <nav key="nav" className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+                <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">PoE Simulator</a>
+                <ul className="navbar-nav px-3">
+                    <li className="nav-item text-nowrap">
+                        <a className="nav-link" href="#">Sign out</a>
+                    </li>
+                </ul>
+            </nav>,
+            <div key="body" className="container-fluid" role="main">
                 <Tabs>
                     <Tab title="Passives">
                         <PassiveTree character={this.character}/>
@@ -22,9 +30,9 @@ class App extends React.Component {
                         Gear
                     </Tab>
                 </Tabs>
-                <DevTools/>
+                {/*<DevTools/>*/}
             </div>
-        );
+        ];
     }
 }
 
