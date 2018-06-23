@@ -1,0 +1,35 @@
+{
+  "name": "js-utils",
+  "version": "0.0.1-snapshot",
+  "main": "index.js",
+  "author": "Jacob Swanson <jacob.swanson.n@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/jest": "^23.1.1",
+    "jest": "^23.1.0",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^22.4.6",
+    "typescript": "^2.9.2"
+  },
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "rimraf dist/* && tsc",
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "rootDir": "src",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

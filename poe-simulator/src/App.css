@@ -1,8 +1,9 @@
-.is-maximized {
-    height: 100%;
-}
-
 html {
     background: #ECF0F3;
     overflow: auto;
+}
+
+.App .hero-body {
+    align-items: flex-start !important;
+    padding: 0.5rem 0.75rem;
 }

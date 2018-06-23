@@ -1,3 +1,5 @@
 simple-virtual-currency/out/
 .idea/
 poe-simulator/public/images/
+node_modules/
+*.iml

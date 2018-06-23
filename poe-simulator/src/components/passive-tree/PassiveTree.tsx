@@ -18,13 +18,35 @@ interface PassiveTreeProps {
 @observer
 export class PassiveTree extends React.Component<PassiveTreeProps> {
     @observable private scale = 1;
+    private div: HTMLDivElement | null;
+
+    @observable private width = 1280;
+    @observable private height = 720;
+
+    onResize = () => {
+        if (!this.div) {
+            return;
+        }
+        this.width = this.div.clientWidth;
+        this.height = this.div.clientHeight;
+
+        log.debug('Resized to', this.width, this.height);
+    };
+
+    componentDidMount() {
+        window.addEventListener('resize', this.onResize);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.onResize);
+    }
 
     render() {
         return (
-            <div className="PassiveTree is-maximized">
+            <div ref={ref => this.div = ref} className="PassiveTree">
                 <PixiStage
-                    width={window.innerWidth}
-                    height={window.innerHeight}
+                    width={this.width}
+                    height={this.height}
                     backgroundColor={0x1099bb}
                     scale={this.scale}
                     draggable={true}
