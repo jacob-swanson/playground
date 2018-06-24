@@ -9,3 +9,7 @@ __export(require("./logger/LoggerFactory"));
 __export(require("./logger/NullLogger"));
 __export(require("./StringUtils"));
 __export(require("./FilesystemUtils"));
+__export(require("./http-client/HttpClient"));
+__export(require("./http-client/HttpRequest"));
+__export(require("./http-client/node/NodeHttpClient"));
+__export(require("./http-client/node/NodeHttpResponse"));
