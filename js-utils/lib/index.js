@@ -8,3 +8,4 @@ __export(require("./logger/Logger"));
 __export(require("./logger/LoggerFactory"));
 __export(require("./logger/NullLogger"));
 __export(require("./StringUtils"));
+__export(require("./FilesystemUtils"));

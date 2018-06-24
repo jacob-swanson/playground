@@ -4,3 +4,4 @@ export * from './logger/LoggerFactory';
 export * from './logger/NullLogger';
 export * from './Json';
 export * from './StringUtils';
+export * from './FilesystemUtils';
