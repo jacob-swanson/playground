@@ -1,14 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var StringUtils = /** @class */ (function () {
-    function StringUtils() {
+class StringUtils {
+    constructor() {
     }
-    StringUtils.indent = function (value, indent) {
-        if (indent === void 0) { indent = '    '; }
+    static indent(value, indent = '    ') {
         return value.replace(/^(?=.)/gm, indent);
-    };
-    StringUtils.padStart = function (value, targetLength, padString) {
-        if (padString === void 0) { padString = ' '; }
+    }
+    static padStart(value, targetLength, padString = ' ') {
         if (value.length > targetLength) {
             return value;
         }
@@ -19,9 +17,8 @@ var StringUtils = /** @class */ (function () {
             }
             return padString.slice(0, targetLength) + value;
         }
-    };
-    StringUtils.padEnd = function (value, targetLength, padString) {
-        if (padString === void 0) { padString = ' '; }
+    }
+    static padEnd(value, targetLength, padString = ' ') {
         if (value.length > targetLength) {
             return value;
         }
@@ -32,7 +29,6 @@ var StringUtils = /** @class */ (function () {
             }
             return value + padString.slice(0, targetLength);
         }
-    };
-    return StringUtils;
-}());
+    }
+}
 exports.StringUtils = StringUtils;
