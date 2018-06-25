@@ -1,11 +1,10 @@
 {
-  "name": "@jswanson/js-utils",
-  "version": "0.0.1-snapshot",
+  "name": "@jacob-swanson/js-utils",
+  "version": "0.2.0-snapshot",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "author": "Jacob Swanson <jacob.swanson.n@gmail.com>",
   "license": "MIT",
-  "private": true,
   "devDependencies": {
     "@types/jest": "23.1.1",
     "barrelsby": "1.0.2",
@@ -16,7 +15,9 @@
     "typescript": "2.9.2"
   },
   "files": [
-    "lib"
+    "lib/",
+    "package.json",
+    "README.md"
   ],
   "scripts": {
     "build": "rimraf lib/* && tsc",

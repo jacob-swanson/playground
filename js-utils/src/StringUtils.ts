@@ -18,7 +18,7 @@ export class StringUtils {
         }
     }
 
-    public static padEnd(value: string, targetLength: number, padString: string = " ") {
+    public static padEnd(value: string, targetLength: number, padString: string = " "): string {
         if (value.length > targetLength) {
             return value;
         } else {

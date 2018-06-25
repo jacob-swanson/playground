@@ -4,7 +4,7 @@ export class FilesystemUtils {
     private constructor() {
     }
 
-    public static mkdir(path: string) {
+    public static mkdir(path: string): void {
         if (!fs.existsSync(path)) {
             fs.mkdirSync(path);
         }
