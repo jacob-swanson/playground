@@ -1,6 +1,6 @@
-import {WriteStream} from 'fs';
-import {IncomingMessage} from 'http';
-import {HttpResponse} from '../HttpResponse';
+import {WriteStream} from "fs";
+import {IncomingMessage} from "http";
+import {HttpResponse} from "../HttpResponse";
 
 export class NodeHttpResponse implements HttpResponse {
     private response: IncomingMessage;
@@ -9,27 +9,27 @@ export class NodeHttpResponse implements HttpResponse {
         this.response = response;
     }
 
-    async pipe(destination: WriteStream): Promise<void> {
+    public async pipe(destination: WriteStream): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             this.response.pipe(destination);
-            destination.on('finish', () => {
+            destination.on("finish", () => {
                 resolve();
             });
         });
     }
 
-    async json<T>(): Promise<T> {
+    public async json<T>(): Promise<T> {
         const buffer = await this.buffer();
         return JSON.parse(buffer.toString());
     }
 
-    async buffer(): Promise<Buffer> {
+    public async buffer(): Promise<Buffer> {
         return new Promise<Buffer>((resolve, reject) => {
             const buffer: Buffer[] = [];
-            this.response.on('data', (chunk: Buffer) => {
+            this.response.on("data", (chunk: Buffer) => {
                 buffer.push(chunk);
             });
-            this.response.on('end', () => {
+            this.response.on("end", () => {
                 resolve(Buffer.concat(buffer));
             });
         });

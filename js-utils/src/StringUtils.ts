@@ -2,11 +2,11 @@ export class StringUtils {
     private constructor() {
     }
 
-    public static indent(value: string, indent: string = '    '): string {
+    public static indent(value: string, indent: string = "    "): string {
         return value.replace(/^(?=.)/gm, indent);
     }
 
-    public static padStart(value: string, targetLength: number, padString: string = ' '): string {
+    public static padStart(value: string, targetLength: number, padString: string = " "): string {
         if (value.length > targetLength) {
             return value;
         } else {
@@ -18,7 +18,7 @@ export class StringUtils {
         }
     }
 
-    public static padEnd(value: string, targetLength: number, padString: string = ' ') {
+    public static padEnd(value: string, targetLength: number, padString: string = " ") {
         if (value.length > targetLength) {
             return value;
         } else {

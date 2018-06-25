@@ -1,18 +1,20 @@
-import { Logger, LogLevel } from './Logger';
-import { Json } from '../Json';
+import {Logger} from "./Logger";
+import {Json} from "../Json";
+import {LogLevel} from "./LogLevel";
 
-/* tslint:disable:no-console */
-
+/**
+ * Outputs log messages using console.log.
+ */
 export class ConsoleLogger extends Logger {
     protected readonly tag: string;
 
     constructor(tag: string) {
         super();
-        // this.tag = StringUtils.padEnd(tag.substring(0, 10), 10);
         this.tag = tag;
     }
 
-    log(level: LogLevel, message: string, ...context: Json[]): void {
+    public log(level: LogLevel, message: string, ...context: Json[]): void {
+        /* tslint:disable:no-console */
         const datetime = new Date().toISOString();
         const output = `[${datetime}] [${this.tag}] [${level}] ${message}`;
         if (Array.isArray(context) && context.length > 0) {
@@ -24,7 +26,6 @@ export class ConsoleLogger extends Logger {
         } else {
             console.log(output);
         }
+        /* tslint:enable:no-console */
     }
 }
-
-/* tslint:enable:no-console */
