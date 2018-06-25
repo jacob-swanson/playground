@@ -8,11 +8,16 @@ yarn build
 
 ## Other dev stuff
 Running the linter
-```bash
+```
 yarn run lint
 ```
 
 Generating `index.ts`
-```bash
+```
 yarn run generate-barrels
+```
+
+Publishing
+```
+yarn publish
 ```
